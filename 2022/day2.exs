@@ -1,30 +1,30 @@
 defmodule Day2 do
   defp string_to_atoms(string, :part1) do
     case string do
-      "A X" -> {:rock, :rock, :draw}
-      "A Y" -> {:rock, :paper, :win}
-      "A Z" -> {:rock, :scissors, :loss}
-      "B X" -> {:paper, :rock, :loss}
-      "B Y" -> {:paper, :paper, :draw}
-      "B Z" -> {:paper, :scissors, :win}
-      "C X" -> {:scissors, :rock, :win}
-      "C Y" -> {:scissors, :paper, :loss}
-      "C Z" -> {:scissors, :scissors, :draw}
+      "A X" -> {:rock, :draw}
+      "A Y" -> {:paper, :win}
+      "A Z" -> {:scissors, :loss}
+      "B X" -> {:rock, :loss}
+      "B Y" -> {:paper, :draw}
+      "B Z" -> {:scissors, :win}
+      "C X" -> {:rock, :win}
+      "C Y" -> {:paper, :loss}
+      "C Z" -> {:scissors, :draw}
       _ -> {:blank}
     end
   end
 
   defp string_to_atoms(string, :part2) do
     case string do
-      "A X" -> {:rock, :scissors, :loss}
-      "A Y" -> {:rock, :rock, :draw}
-      "A Z" -> {:rock, :paper, :win}
-      "B X" -> {:paper, :rock, :loss}
-      "B Y" -> {:paper, :paper, :draw}
-      "B Z" -> {:paper, :scissors, :win}
-      "C X" -> {:scissors, :paper, :loss}
-      "C Y" -> {:scissors, :scissors, :draw}
-      "C Z" -> {:scissors, :rock, :win}
+      "A X" -> {:scissors, :loss}
+      "A Y" -> {:rock, :draw}
+      "A Z" -> {:paper, :win}
+      "B X" -> {:rock, :loss}
+      "B Y" -> {:paper, :draw}
+      "B Z" -> {:scissors, :win}
+      "C X" -> {:paper, :loss}
+      "C Y" -> {:scissors, :draw}
+      "C Z" -> {:rock, :win}
       _ -> {:blank}
     end
   end
@@ -38,32 +38,21 @@ defmodule Day2 do
 
   defp calc_round({:blank}), do: 0
 
-  defp calc_round({_, player, result}) do
+  defp calc_round({player, result}) do
     atom_to_value(player) + atom_to_value(result)
   end
 
-  def solve_part1 do
+  def solve(part) do
     {result, data} = File.read("./input/day2.txt")
-    IO.puts(result)
+    IO.puts("#{part}: #{result}")
 
     String.split(data, "\n")
-    |> Enum.map(fn x -> string_to_atoms(x, :part1) end)
-    |> Enum.map(fn x -> calc_round(x) end)
-    |> Enum.sum()
-    |> IO.puts()
-  end
-
-  def solve_part2 do
-    {result, data} = File.read("./input/day2.txt")
-    IO.puts(result)
-
-    String.split(data, "\n")
-    |> Enum.map(fn x -> string_to_atoms(x, :part2) end)
+    |> Enum.map(fn x -> string_to_atoms(x, part) end)
     |> Enum.map(fn x -> calc_round(x) end)
     |> Enum.sum()
     |> IO.puts()
   end
 end
 
-Day2.solve_part1()
-Day2.solve_part2()
+Day2.solve(:part1)
+Day2.solve(:part2)
