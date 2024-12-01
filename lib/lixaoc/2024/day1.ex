@@ -17,7 +17,7 @@ defmodule Lixaoc.AOC2024.Day1 do
     col2 = Enum.sort(parsed_nums.col2)
 
     part1 =
-      Enum.zip_reduce(Enum.sort(parsed_nums.col1), Enum.sort(parsed_nums.col2), 0, fn x, y, acc ->
+      Enum.zip_reduce(col1, col2, 0, fn x, y, acc ->
         acc + abs(x - y)
       end)
 
